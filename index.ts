@@ -1,0 +1,1 @@
+export { syncPropComputed, syncPropWatch } from "./src/utils/sync"

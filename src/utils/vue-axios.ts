@@ -16,7 +16,7 @@ interface buildUsePostReturn<T> {
 }
 
 export const buildUseFactory = <T>(config: FactoryConfig<T>) => {
-  const buildUseGet = (path: string): buildUseGetReturn<T> => {
+  const buildUseGet = (path: string) => (): buildUseGetReturn<T> => {
     const item = ref(config.createItem()) as Ref<T>
 
     const fetch = () => config.instance

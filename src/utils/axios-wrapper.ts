@@ -1,16 +1,14 @@
-import { ref, computed, Ref} from "vue"
 import axios,{ AxiosRequestConfig, AxiosInstance, AxiosTransformer, AxiosResponse } from "axios"
 
 interface InstanceConfig {
   axiosConfig?: AxiosRequestConfig;
-  transformJSON: Boolean
 }
 
 export class AxiosWrapper {
   axiosConfig: AxiosRequestConfig;
   protected axiosInstance: AxiosInstance;
 
-  constructor({ axiosConfig, transformJSON }:InstanceConfig){
+  constructor({ axiosConfig }:InstanceConfig){
     this.axiosConfig = axiosConfig || {}
     this.axiosInstance = axios.create()
   }

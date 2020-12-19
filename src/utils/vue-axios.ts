@@ -4,7 +4,6 @@ import { ref, Ref } from "vue"
 interface FactoryConfig<T> {
   instance: AxiosInstance;
   createItem: () => T;
-  item: T;
 }
 
 interface buildUseGetReturn<T> {

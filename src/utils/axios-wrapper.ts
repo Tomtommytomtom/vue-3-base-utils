@@ -30,8 +30,8 @@ export class TokenAxiosWrapper extends AxiosWrapper {
   public tokenDataPath: string[];
   constructor(config: TokenConfig){
     super(config)
-    
     this.token = ''
+    console.log('does this shit even work???')
     if(config.localStorage){
       console.log('inside constructor, getting accessToken from localStorage',localStorage.getItem('accessToken'),localStorage)
       this.token = localStorage.getItem('accessToken') || ''

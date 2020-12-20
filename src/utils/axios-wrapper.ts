@@ -33,6 +33,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
     
     this.token = ''
     if(config.localStorage){
+      console.log('inside constructor, getting accessToken from localStorage',localStorage.getItem('accessToken'),localStorage)
       this.token = localStorage.getItem('accessToken') || ''
     }
     
@@ -56,6 +57,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
 
     if(accessToken){
       this.token = accessToken
+      console.log('setting token in retreive token, ',localStorage)
       localStorage.setItem('accessToken',accessToken)
     }
     return res

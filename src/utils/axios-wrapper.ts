@@ -33,7 +33,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
     
     this.token = ''
     if(config.localStorage){
-      this.token = window.localStorage.getItem('accessToken') || ''
+      this.token = localStorage.getItem('accessToken') || ''
     }
     
     this.tokenDataPath = config.tokenDataPath || ['accessToken']
@@ -56,7 +56,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
 
     if(accessToken){
       this.token = accessToken
-      window.localStorage.setItem('accessToken',accessToken)
+      localStorage.setItem('accessToken',accessToken)
     }
     return res
   }

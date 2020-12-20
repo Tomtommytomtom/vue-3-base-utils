@@ -22,7 +22,7 @@ export class AxiosWrapper {
 
 interface TokenConfig extends InstanceConfig{
   tokenDataPath?: string[]
-  localStorage: boolean
+  localStorage?: boolean
 }
 
 export class TokenAxiosWrapper extends AxiosWrapper {
@@ -32,7 +32,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
     super(config)
     
     this.token = ''
-    if(localStorage){
+    if(config.localStorage){
       this.token = window.localStorage.getItem('accessToken') || ''
     }
     

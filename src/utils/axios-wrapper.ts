@@ -69,6 +69,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
 
   public clearToken(){
     this.token = ''
+    localStorage.removeItem('accessToken')
   }
 }
 

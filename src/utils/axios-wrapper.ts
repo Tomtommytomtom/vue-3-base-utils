@@ -1,4 +1,4 @@
-import axios,{ AxiosRequestConfig, AxiosInstance, AxiosTransformer, AxiosResponse } from "axios"
+import axios,{ AxiosRequestConfig, AxiosInstance, AxiosResponse } from "axios"
 
 interface InstanceConfig {
   axiosConfig?: AxiosRequestConfig;
@@ -22,6 +22,7 @@ export class AxiosWrapper {
 
 interface TokenConfig extends InstanceConfig{
   tokenDataPath?: string[]
+  localStorage: boolean
 }
 
 export class TokenAxiosWrapper extends AxiosWrapper {
@@ -29,7 +30,12 @@ export class TokenAxiosWrapper extends AxiosWrapper {
   public tokenDataPath: string[];
   constructor(config: TokenConfig){
     super(config)
+    
     this.token = ''
+    if(localStorage){
+      this.token = window.localStorage.getItem('accessToken') || ''
+    }
+    
     this.tokenDataPath = config.tokenDataPath || ['accessToken']
   }
 
@@ -50,6 +56,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
 
     if(accessToken){
       this.token = accessToken
+      window.localStorage.setItem('accessToken',accessToken)
     }
     return res
   }

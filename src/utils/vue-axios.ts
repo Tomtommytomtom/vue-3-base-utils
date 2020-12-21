@@ -6,6 +6,11 @@ interface FactoryConfig<T> {
   createItem: () => T;
 }
 
+interface buildUseGetConfig<T> {
+  path: string;
+  itemRef?: Ref<T>;
+}
+
 interface buildUseGetReturn<T> {
   fetch: () => Promise<AxiosResponse<T>>;
   item: Ref<T>
@@ -15,12 +20,18 @@ interface buildUsePostReturn<T> {
   handler: () => Promise<AxiosResponse<T>>
 }
 
-export const buildUseFactory = <T>(config: FactoryConfig<T>) => {
-  const buildUseGet = (path: string) => (): buildUseGetReturn<T> => {
-    const item = ref(config.createItem()) as Ref<T>
+export const buildUseFactory = <T>(globalConfig: FactoryConfig<T>) => {
+  const buildUseGet = (config: buildUseGetConfig<T>) => (): buildUseGetReturn<T> => {
+    let item: Ref<T>;
+    if(config.itemRef){
+      item = config.itemRef;
+    } else {
+      item = ref(globalConfig.createItem()) as Ref<T>
+    }
+    
 
-    const fetch = () => config.instance
-      .get(path)
+    const fetch = () => globalConfig.instance
+      .get(config.path)
       .then(res => {
         item.value = res.data
         return res
@@ -33,7 +44,7 @@ export const buildUseFactory = <T>(config: FactoryConfig<T>) => {
   }
 
   const buildUsePost = (path: string) => (dataRef: Ref<T>): buildUsePostReturn<T> => {
-    const handler = () => config.instance
+    const handler = () => globalConfig.instance
       .post(path,dataRef.value)
     return {
       handler

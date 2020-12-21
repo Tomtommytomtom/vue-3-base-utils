@@ -1,4 +1,5 @@
 import axios,{ AxiosRequestConfig, AxiosInstance, AxiosResponse } from "axios"
+import { ref, Ref } from "vue"
 
 interface InstanceConfig {
   axiosConfig?: AxiosRequestConfig;
@@ -26,13 +27,13 @@ interface TokenConfig extends InstanceConfig{
 }
 
 export class TokenAxiosWrapper extends AxiosWrapper {
-  public token: string;
+  public token: Ref<string>;
   public tokenDataPath: string[];
   constructor(config: TokenConfig){
     super(config)
-    this.token = ''
+    this.token = ref('')
     if(config.localStorage){
-      this.token = localStorage.getItem('accessToken') || ''
+      this.token.value = localStorage.getItem('accessToken') || ''
     }
     
     this.tokenDataPath = config.tokenDataPath || ['accessToken']
@@ -43,7 +44,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
       ...config,
       headers: {
         ...config.headers,
-        Authorization: `Bearer ${this.token || ''}`
+        Authorization: `Bearer ${this.token.value || ''}`
       }
     }
   }
@@ -54,7 +55,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
     }, res.data)
 
     if(accessToken){
-      this.token = accessToken
+      this.token.value = accessToken
       localStorage.setItem('accessToken',accessToken)
     }
     return res
@@ -68,7 +69,7 @@ export class TokenAxiosWrapper extends AxiosWrapper {
   }
 
   public clearToken(){
-    this.token = ''
+    this.token.value = ''
     localStorage.removeItem('accessToken')
   }
 }

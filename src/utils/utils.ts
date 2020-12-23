@@ -21,3 +21,14 @@ export const debounce = <F extends Function>(func: F, wait:number, immediate:boo
         if (callNow) func.apply(context, args);
     };
 };
+
+export const shuffle = <T>(array: T[]) =>{
+    let result = array;
+    for(let i = array.length - 1; i >= 0; i--){
+        let j = Math.floor(Math.random() * i)
+        let tmp = result[i]
+        result[i] = result[j]
+        result[j] = tmp
+    }
+    return result
+}
